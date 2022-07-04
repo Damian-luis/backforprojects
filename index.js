@@ -5,7 +5,8 @@ const axios = require('axios')
 var cors = require('cors')
 app.use(bodyParser.json());
 app.use(cors())
-app.listen(3000,()=>{
+const port = process.env.PORT || 3000 ;
+app.listen(port,()=>{
     console.log("escuchando en el puerto 3000")
 })
 
