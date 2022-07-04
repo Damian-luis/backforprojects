@@ -23,20 +23,31 @@ app.get("/users",async(req, res)=>{
 app.get("/users/status/:status",async(req, res)=>{
     
     const status=req.params.status;
-    
+    if(status=="all"){
+        const data = await axios.get("https://gorest.co.in/public/v2/users").then(e=>{ return e.data})
+        res.send(data)
+    }
+    else{
     const data = await axios.get("https://gorest.co.in/public/v2/users").then(e=>{ return e.data})
     const result=data.filter(e=>{return e.status==status})
 
-    res.send(result)
+    res.send(result)}
 })
 
 app.get("/users/gender/:gender",async(req, res)=>{
     
     const gender=req.params.gender;
-    
-    const data = await axios.get("https://gorest.co.in/public/v2/users").then(e=>{ return e.data})
+    if(gender=="all"){
+        const data = await axios.get("https://gorest.co.in/public/v2/users").then(e=>{ return e.data})
+        res.send(data)
+    }
+    else{
+
+        const data = await axios.get("https://gorest.co.in/public/v2/users").then(e=>{ return e.data})
     const result=data.filter(e=>{return e.gender==gender})
 
     res.send(result)
+    }
+    
 })
 
