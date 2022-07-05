@@ -30,6 +30,23 @@ var connection = mysql.createConnection({
 
 
 
+app.post('/new-user', function(req, res) {
+
+    const query="INSERT INTO users SET ?";
+    const obj={
+        mail : req.body.mail,
+        gender:req.body.gender,
+        name : req.body.name,
+        status : req.body.status
+
+    };
+    connection.query(query, obj,(error, result) => {
+        if (error) {throw error;}
+        else (res.status(200).send("user posted succesfully"))
+    })
+
+})
+
 
 app.get("/all",(req, res) => {
     const query = "SELECT * FROM users";
