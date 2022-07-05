@@ -30,7 +30,7 @@ var connection = mysql.createConnection({
 
 
 
-app.post('/new-user', function(req, res) {
+app.post('/new', function(req, res) {
 
     const query="INSERT INTO users SET ?";
     const obj={
