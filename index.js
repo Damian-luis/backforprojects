@@ -49,7 +49,7 @@ app.post('/new-users', (req, res)=>{
 })
 
 
-app.get("/all",(req, res) => {
+/*app.get("/all",(req, res) => {
     const query = "SELECT * FROM users";
     connection.query(query,((error,result)=>{
         if (error) { throw error }
@@ -59,7 +59,7 @@ app.get("/all",(req, res) => {
         else { res.status(500).send("no se ha podido establecer la conexion a la base de datos")}
     }))
 })
-
+*/
 
 app.get("/info", (req, res)=>{
     res.send("funcionando")
