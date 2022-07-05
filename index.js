@@ -41,7 +41,7 @@ app.post('/new-users', (req, res)=>{
         status : req.body.status
 
     };
-    connection.query(query, obj,(error, result) => {
+    connection.query(obj, query,(error, result) => {
         if (error) {throw error;}
         else (res.status(200).send("user posted succesfully"))
     })
