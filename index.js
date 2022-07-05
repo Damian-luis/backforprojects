@@ -2,6 +2,7 @@ const express = require('express');
 const app=express();
 const bodyParser = require('body-parser');
 const axios = require('axios')
+const mysql = require('mysql2');
 var cors = require('cors')
 app.use(bodyParser.json());
 app.use(cors())
@@ -10,35 +11,34 @@ app.listen(port,()=>{
     console.log("escuchando en el puerto 3000")
 })
 
-
-
-
-app.get("/info",(req, res)=>{res.send("aqui todo bien")})
-app.get("/users",async(req, res)=>{
-    const data = await axios.get("https://gorest.co.in/public/v2/users")
-    
-    res.send(data.data)
-
-})
-app.get("/users/status/:status",async(req, res)=>{
-    
-    const status=req.params.status;
+//conexion a db
+var connection = mysql.createConnection({
+    host     : 'mysql-damianduran.alwaysdata.net',
+    user     : '274005',
+    password : 'SilentHill2',
+    database : 'damianduran_proyect_users'
+  });
    
-    const data = await axios.get("https://gorest.co.in/public/v2/users").then(e=>{ return e.data})
-    const result=data.filter(e=>{return e.status==status})
+  connection.connect(function(err) {
+    if (err) {
+      console.error('error connecting: ' + err.stack);
+      return;
+    }
+   
+    console.log('connected as id ' + connection.threadId);
+  });
 
-    res.send(result)
-})
 
-app.get("/users/gender/:gender",async(req, res)=>{
-    
-    const gender=req.params.gender;
-    
-        const data = await axios.get("https://gorest.co.in/public/v2/users").then(e=>{ return e.data})
-    const result=data.filter(e=>{return e.gender==gender})
 
-    res.send(result)
-    
-    
+
+app.get("/all",(req, res) => {
+    const query = "SELECT * FROM users";
+    connection.query(query,((error,result)=>{
+        if (error) { throw error }
+        if (result.length){
+            res.send(result);
+        }
+        else { res.status(500).send("no se ha podido establecer la conexion a la base de datos")}
+    }))
 })
 
