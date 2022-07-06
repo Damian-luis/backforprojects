@@ -7,7 +7,7 @@ var cors = require('cors');
 
 app.use(bodyParser.json());
 app.use(cors())
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 app.listen(port,()=>{
     console.log("escuchando en el puerto 3000")
 })
@@ -87,7 +87,7 @@ app.get("/info", (req, res)=>{
 
 app.delete("/delete/:id", (req, res)=>{
     const id = req.params.id
-    const query=`DELETE * FROM users WHERE id=${id}`
+    const query=`DELETE FROM users WHERE id=${id}`
     connection.query(query,((error, result)=>{
         if (error) {throw error}
         else { res.send("user deleted succesfully")}
