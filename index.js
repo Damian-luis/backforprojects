@@ -20,6 +20,8 @@ var connection = mysql.createConnection({
     database : 'damianduran_proyect_users'
   });
    
+
+
   connection.connect(function(err) {
     if (err) {
       console.error('error connecting: ' + err.stack);
@@ -41,10 +43,11 @@ app.post('/new-users', (req, res)=>{
         status : req.body.status
 
     };
-    connection.query(obj, query,(error, result) => {
+    
+    connection.query(query,obj,(error, result) => {
         if (error) {throw error;}
         else (res.status(200).send("user posted succesfully"))
-    })
+    })  
 
 })
 
