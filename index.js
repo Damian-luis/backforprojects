@@ -31,8 +31,25 @@ var connection = mysql.createConnection({
     console.log('connected as id ' + connection.threadId);
   });
 
-
-
+async function saveDataFromApi(){
+    const data= await axios.get("https://gorest.co.in/public/v2/users").then(e=>{return e.data});
+    for(var i=0; i<data.length; i++){
+        const query="INSERT INTO users SET ?";
+        const obj={
+            mail : data[i].email,
+            gender:data[i].gender,
+            name : data[i].name,
+            status : data[i].status
+    
+        };
+        
+        connection.query(query,obj,(error, result) => {
+            if (error) {throw error;}
+            else (console.log("posteado exitosamente"))
+        })
+    }
+}
+saveDataFromApi();
 app.post('/new-users', (req, res)=>{
 
     const query="INSERT INTO users SET ?";
@@ -66,4 +83,13 @@ app.get("/all",(req, res) => {
 
 app.get("/info", (req, res)=>{
     res.send("funcionando")
+})
+
+app.delete("/delete/:id", (req, res)=>{
+    const id = req.params.id
+    const query=`DELETE * FROM users WHERE id=${id}`
+    connection.query(query,((error, result)=>{
+        if (error) {throw error}
+        else { res.send("user deleted succesfully")}
+    }))
 })
