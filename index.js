@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const axios = require('axios')
 const mysql = require('mysql2');
 var cors = require('cors');
-const { applyPatches } = require('immer');
+
 app.use(bodyParser.json());
 app.use(cors())
 const port = process.env.PORT || 3000;
