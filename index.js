@@ -7,9 +7,9 @@ var cors = require('cors');
 
 app.use(bodyParser.json());
 app.use(cors())
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 4000;
 app.listen(port,()=>{
-    console.log("escuchando en el puerto 3000")
+    console.log(`escuchando en el puerto ${port}`);
 })
 
 //conexion a db
@@ -18,9 +18,9 @@ var connection = mysql.createConnection({
     user     : '274005',
     password : 'SilentHill2',
     database : 'damianduran_proyect_users'
-  });
+  }); 
    
-
+  
 
   connection.connect(function(err) {
     if (err) {
@@ -42,16 +42,16 @@ async function saveDataFromApi(){
             status : data[i].status
     
         };
-        
+        console.log(obj);
         connection.query(query,obj,(error, result) => {
             if (error) {throw error;}
             else (console.log("posteado exitosamente"))
         })
     }
 }
-saveDataFromApi();
-app.post('/new-users', (req, res)=>{
 
+app.post('/new-users', (req, res)=>{
+console.log(req.body.name)
     const query="INSERT INTO users SET ?";
     const obj={
         mail : req.body.mail,
@@ -60,7 +60,7 @@ app.post('/new-users', (req, res)=>{
         status : req.body.status
 
     };
-    
+    console.log(obj);
     connection.query(query,obj,(error, result) => {
         if (error) {throw error;}
         else (res.status(200).send("user posted succesfully"))
