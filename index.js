@@ -36,7 +36,7 @@ async function saveDataFromApi(){
     for(var i=0; i<data.length; i++){
         const query="INSERT INTO users SET ?";
         const obj={
-            mail : data[i].email,
+            mail : data[i].mail,
             gender:data[i].gender,
             name : data[i].name,
             status : data[i].status
